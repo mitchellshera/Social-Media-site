@@ -1,0 +1,49 @@
+{%  extends "unmismatch3d/layout.html"  %}
+
+{% block body %}
+
+{% if message %}
+    <div>{{ message }}</div>
+{% endif %}
+<!-- partial:index.partial.html -->
+<div class="box-form">
+	<div class="left">
+		<div class="overlay">
+		<h1>Unmismatched.</h1>
+		<p>Are you ready to be unmismatched?</p>
+		
+		</div>
+	</div>
+	
+	
+		<div class="right">
+		
+		<form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+            </div>
+            <div class="form-group">
+                <input autofocus class="form-control" type="text" name="email" placeholder="Email Address">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Register">
+        </form>
+			
+			<br><br>
+			
+		
+			
+			<br>
+			<button>Register</button>
+	</div>
+	
+</div>
+<!-- partial -->
+  
+{% endblock %}

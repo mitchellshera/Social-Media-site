@@ -1,0 +1,43 @@
+{% extends "unmismatch3d/layout.html" %}
+
+{% block body %}
+
+{%for item in items %}
+
+
+<div class="container">
+    <h2>{{item.username}}</h2>
+
+    <br>
+        <p><b></b>{{item.dob}}</p>
+    <br>
+    <p>   {{item.location}} 
+    </p>
+    <p>   {{item.gender}} 
+    </p>
+    <p>   {{item.age}} 
+    </p>
+</div>
+<div class="container">
+    <li>
+        <ul> {{item.hobbies}} </ul>
+    </li>
+    <p>   {{item.bio}} 
+    </p>
+    <div class="col-md-4">
+        <img src="{{item.link}}" class="card-img" alt="..." style="width:80%;">
+      </div>
+</div>
+
+
+ 
+ <div class="container">
+    <a href="{% url 'mess'  %}"><button class="btn btn-outline-success">Send Message</button></a>
+
+
+ </div>
+{% endfor %}
+
+
+
+{% endblock %}

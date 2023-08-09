@@ -1,0 +1,89 @@
+{% extends "unmismatch3d/layout.html" %}
+
+{% block body %}
+
+<h1>Search Results</h1>
+<form action="{% url 'match' %}" method="POST">
+    {% csrf_token %} 
+    <input type="text" name="seeking", placeholder="seeking"><br>
+    <input type="checkbox" name="hobbies" value="golf" id=hob1>
+    <label for="hob1"> Golf</label>
+    <input type="checkbox" name="hobbies" value="Reading" id="hob2">
+    <label for="hob2"> Reading</label>
+    <input type="checkbox" name="hobbies" value="bingewatching" id="hob3">
+    <label for="hob3"> Binge watching</label>
+    <input type="checkbox" name="hobbies" value="pottery" id="hob4">
+    <label for="hob4"> Pottery</label><br>
+    
+    <input type="submit" name="submit" value="Search">
+</form>
+
+
+<div class="container" id="listings">
+    {% for result in results %}
+    <div class="card mb-3" style="max-width: 540px;" id="card-listings" 
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <img src="{{result.media.url}}" class="card-img" alt="..." style="width:80%;"/>
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              
+              <h5 class="card-title">{{result.username}}</h5>
+              <p class="card-text">{{result.location}}</p>
+              <p class="card-text">{{result.age}}</p>
+              <p>   {{result.bio}} 
+              </p>
+              <a href= "{% url 'us2profile' result.id %}" ><button class="btn btn-outline-success">Go to profile</button></a>
+              <p class="card-text"><small class="text-muted">{{result.hobbies}}</small></p>
+              
+            </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+</div>
+
+ 
+{% comment %} <center>
+    Search Match using Dropdown Search
+    <hr>
+    <form method="POST>">
+        {% csrf_token %}
+        <select name="gender">
+            <option selected disabled=true>--Select Gender--</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+        </select>
+        <select name="hobbie">
+            <option selected disabled=true>--Select hobbie--</option>
+            <option>golf</option>
+            <option>bingewatching</option>
+            <option>Junior IT Engineer</option>
+            <option>Senior IT Engineer</option>
+        </select>
+        <input type="submit" value="Search">
+        <hr>
+        <table border="1">
+            <tr>
+                <th>Username</th>
+                <th>Gender</th>
+                <th>hobbie</th>
+            </tr>
+            {% for result in data %}
+            <tr>
+                <td>{{result.username}}</td>
+
+                <td>{{result.gender}}</td>
+                <td>{{result.hobbie}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+    </form>
+
+</center> {% endcomment %}
+
+{% endblock %}

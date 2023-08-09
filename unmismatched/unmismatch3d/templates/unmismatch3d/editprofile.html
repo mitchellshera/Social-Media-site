@@ -1,0 +1,12 @@
+{% extends "unmismatch3d/layout.html" %}
+
+{% block body %}
+
+
+<form action="{% url 'editprofile' %}" method="post" enctype="multipart/form-data" style="margin: 0 auto; 
+width:250px;">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Save"/>
+</form>
+{% endblock %}

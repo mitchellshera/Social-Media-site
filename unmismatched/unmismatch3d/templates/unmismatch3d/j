@@ -1,0 +1,28 @@
+git clone https://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@github.com/mitchellshera/alx-low_level_programming.git                
+https://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@github.com/Joe-Chege/simple_shell.git
+
+git config --global user.email "mitchellwachera@gmail.com"
+
+git config --global user.name "mitchellshera"
+
+
+deb http://security.ubuntu.com/ubuntu xenial-security main
+
+
+
+
+
+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
+
+path("messages", views.compose, name="compose"),
+path("messages/<int:Message_id>", views.message, name="message"),
+path("messages/<str:mailbox>", views.mailbox, name="mailbox"),
+path("mess",views.mess,name="mess"),
+
+
+
+git push https://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@github.com/me50/mitchellshera.git
+
+
+
+

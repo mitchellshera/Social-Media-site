@@ -1,0 +1,81 @@
+
+''' def match(request):
+ matches=Profile.objects.filter("hobbies")
+
+ matching_ids = []
+ for match in matches:
+  matching_ids.append(match.id)
+
+# You can now use the list of matching IDs for whatever purpose you need
+  print(matching_ids)
+  return render(request, "unmismatch3d/match.html", {
+        
+    }) '''
+
+
+''' class match(View):
+     def get(self, request, user1_slug, user2_slug):
+    user1 = User.objects.get(slug=user1_slug)
+    user2 = User.objects.get(slug=user2_slug)
+    if user1.data == user2.data:
+        result = "The data for these two users is the same."
+    else:
+        result = "The data for these two users is different."
+    return HttpResponse(result) '''
+    
+    
+    
+''' def match(request):
+    if request.method=="POST":
+        searchhobbie=request.POST.get('hobbies')
+        searchgender=request.POST.get('gender')
+        empsearch=Profile.objects.filter(hobbies=searchhobbie,gender=searchgender)
+
+        return render(request,'home.html',{"data":empsearch})
+    else:
+        displayemp=Profile.objects.all()
+
+        return render(request,'unmismatch3d/match.html',{"data":displayemp}) '''
+
+
+
+        
+
+''' def match(request):
+    query = request.GET.get('q')
+    filters = {}
+
+    if request.GET.get('hobbies'):
+        filters['hobbies__icontains'] = request.GET.get('hobbies')
+    if request.GET.get('age'):
+        filters['age'] = request.GET.get('age')
+    if request.GET.get('gender'):
+        filters['gender'] = request.GET.get('gender')
+    if request.GET.get('location'):
+        filters['location__icontains'] = request.GET.get('location')
+
+    results = Profile.objects.filter(username__icontains=query, **filters)
+    
+    if request.POST:
+        displayemp=Profile.objects.all()
+    return render(request, 'match.html', {'results': results}) '''
+    
+    
+    
+    
+    <label for="hobbieSelect">Choose hobbie</label>
+    <select type="text" id="colorSelect" name="colorSelect">
+        <option selected>Golf</option>
+        <option>Reading</option>
+        <option>bingewatching</option>
+        <option>Pottery</option>
+    </select>
+    <br><br>
+ {% comment %}     <input type="choicefield" name="hobbie">
+ {% endcomment %} 
+    {% for value, text in form.providers.field.choices %}
+    <div class="ui slider checkbox">
+    <input id="id_providers_{{ forloop.counter0 }}" name="{{ form.providers.name }}" type="checkbox" value="{{ value }}"{% if value in checked_providers %} checked="checked"{% endif %}>
+    <label>{{ text }}</label>
+    </div>
+    {% endfor %}

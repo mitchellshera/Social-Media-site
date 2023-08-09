@@ -1,0 +1,110 @@
+def mess(request):
+    if request.user.is_authenticated:
+        return render(request, "unmismatch3d/messages.html")
+
+
+
+
+
+@csrf_exempt
+@login_required
+def compose(request):
+
+    # Composing a new message must be via POST
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+    else:
+    # Check recipient messages
+        data = json.loads(request.body)
+        messages = [user.strip() for user in data.get("recipient").split(",")]
+        if messages == [""]:
+            return JsonResponse({
+            "error": "At least one recipient required."
+            }, status=400)
+
+    # Convert message addresses to users
+        recipient = []
+        for user in messages:
+            try:
+                user = User.objects.get(username=user)
+                recipient.append(user)
+            except User.DoesNotExist:
+                return JsonResponse({
+                "error": f"User with username {user} does not exist."
+                }, status=400)
+
+    # Get contents of message
+        body = data.get("body", "")
+
+    # Create one message for each recipient, plus sender
+        users = set()
+        users.add(request.user)
+        users.update(recipient)
+        for user in users:
+            message = Message(
+                user=user,
+                sender=request.user,
+                body=body,
+                read=user == request.user
+            )
+            message.save()
+            for recipient in recipient:
+                message.recipient.add(recipient)
+                message.save()
+
+        return JsonResponse({"message": "Message sent successfully."}, status=201)
+
+
+@login_required
+def mailbox(request, mailbox):
+
+    # Filter messages returned based on mailbox
+    if mailbox == "inbox":
+        messages = Message.objects.filter(
+            sender=request.user, recipient=request.user, archived=False
+        )
+    elif mailbox == "sent":
+        messages = Message.objects.filter(
+            recipient=request.user, sender=request.user
+        )
+    elif mailbox == "archive":
+        messages = Message.objects.filter(
+            sender=request.user, recipient=request.user, archived=True
+        )
+    else:
+        return JsonResponse({"error": "Invalid mailbox."}, status=400)
+
+    # Return messages in reverse chronologial order
+    messages = messages.order_by("-timestamp").all()
+    return JsonResponse([message.serialize() for message in messages], safe=False)
+
+
+@csrf_exempt
+@login_required
+def message(request,Message_id):
+
+    # Query for requested message
+    try:
+        message = Message.objects.get(user=request.user, pk=Message_id)
+    except message.DoesNotExist:
+        return JsonResponse({"error": "message not found."}, status=404)
+
+    # Return message contents
+    if request.method == "GET":
+        return JsonResponse(message.serialize())
+
+    # Update whether message is read or should be archived
+    elif request.method == "PUT":
+        data = json.loads(request.body)
+        if data.get("read") is not None:
+            message.read = data["read"]
+        if data.get("archived") is not None:
+            message.archived = data["archived"]
+        message.save()
+        return HttpResponse(status=204)
+
+    # message must be via GET or PUT
+    else:
+        return JsonResponse({
+            "error": "GET or PUT request required."
+        }, status=400)

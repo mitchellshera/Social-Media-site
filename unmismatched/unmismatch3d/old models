@@ -1,0 +1,20 @@
+class Message(models.Model):
+    user = models.ForeignKey("User", on_delete=models.CASCADE, related_name="messages")
+    sender = models.ForeignKey("User", on_delete=models.CASCADE, related_name='messages_sent')
+    recipient = models.ManyToManyField("User", related_name="messages_received")
+    body = models.TextField(blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    read = models.BooleanField(default=False)
+    archived = models.BooleanField(default=False)
+    
+    
+    def serialize(self):
+            return {
+            "id": self.id,
+            "sender": self.sender.username,
+            "recipient": [user.username for user in self.recipient.all()],
+            "body": self.body,
+            "timestamp": self.timestamp.strftime("%b %d %Y, %I:%M %p"),
+            "read": self.read,
+            "archived": self.archived
+        }
