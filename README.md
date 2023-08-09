@@ -50,9 +50,8 @@ HobbyHub is released under the MIT License. See `LICENSE` for more information.
 If you have any questions or suggestions for HobbyHub, please contact us at support@HobbyHub.com.
 
 
-#images
-<img src="unmismatched/images/1.png" alt="Alt text" title="Optional title">
-<img src="/images/2.png" alt="Alt text" title="Optional title">
+### images
+<img src="unmismatched/images/2.png" alt="Alt text" title="Optional title">
 <img src="unmismatched/images/3.png" alt="Alt text" title="Optional title">
 <img src="unmismatched/images/4.png" alt="Alt text" title="Optional title">
 <img src="unmismatched/images/5.png" alt="Alt text" title="Optional title">
